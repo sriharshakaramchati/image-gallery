@@ -8,7 +8,7 @@
         body {
             text-align: center;
             font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+            background-color: #f0c891; /* Lighter pastel version */
         }
         h1 {
             margin-top: 20px;
@@ -24,11 +24,37 @@
         .clickable {
             cursor: pointer;
         }
+        /* Speaker Button Styling */
+        .music-control {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            display: flex;
+            align-items: center;
+            background-color: white;
+            padding: 8px 12px;
+            border-radius: 25px;
+            box-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+        }
+        .music-control img {
+            width: 25px;
+            height: 25px;
+            margin-right: 8px;
+        }
     </style>
 </head>
 <body>
 
     <h1>Thaathayya Illu (తాతయ్య ఇల్లు)</h1>
+
+    <!-- Background Music -->
+    <audio id="bg-music" loop>
+        <source src="audio/music.mp3" type="audio/mp3">
+        Your browser does not support the audio element.
+    </audio>
 
     <img src="images/image1.jpg" alt="Image 1">
     <img src="images/image2.jpg" alt="Image 2">
@@ -48,6 +74,43 @@
     </a>
 
     <img src="images/image13.jpg" alt="Image 13">
+
+    <!-- Play/Pause Button with Text -->
+    <div id="music-control" class="music-control">
+        <img id="speaker-icon" src="images/play-icon.png" alt="Play Music">
+        <span id="music-text">Play Music</span>
+    </div>
+
+    <!-- JavaScript to Handle Music Toggle -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            let audio = document.getElementById("bg-music");
+            let musicControl = document.getElementById("music-control");
+            let speakerIcon = document.getElementById("speaker-icon");
+            let musicText = document.getElementById("music-text");
+
+            // Default: Set icon to "Play"
+            speakerIcon.src = "images/play-icon.png";
+            musicText.innerText = "Play Music";
+
+            // Function to toggle play/pause
+            function toggleAudio() {
+                if (audio.paused) {
+                    audio.play().then(() => {
+                        speakerIcon.src = "images/pause-icon.png"; // Change to pause icon
+                        musicText.innerText = "Pause Music"; // Update text
+                    }).catch(error => console.log("Autoplay blocked:", error));
+                } else {
+                    audio.pause();
+                    speakerIcon.src = "images/play-icon.png"; // Change to play icon
+                    musicText.innerText = "Play Music"; // Update text
+                }
+            }
+
+            // Event listener for button click
+            musicControl.addEventListener("click", toggleAudio);
+        });
+    </script>
+
 </body>
 </html>
-
